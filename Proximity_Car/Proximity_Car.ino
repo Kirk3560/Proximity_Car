@@ -56,7 +56,7 @@ void setup()
   pinMode(rightMotor2, OUTPUT);
   pinMode(leftMotor1, OUTPUT);
   pinMode(leftMotor2, OUTPUT);
-  
+
   //Serial.begin(9600);
 
 }
@@ -65,12 +65,12 @@ void loop()
 {
   noTone(piezoPin);
   /*
-  Serial.print(senseDistance('l'));
-  Serial.print("   ");
-  Serial.print(senseDistance('s'));
-  Serial.print("   ");
-  Serial.println(senseDistance('r'));
-*/
+    Serial.print(senseDistance('l'));
+    Serial.print("   ");
+    Serial.print(senseDistance('s'));
+    Serial.print("   ");
+    Serial.println(senseDistance('r'));
+  */
   //if the straight ultrasonic sensor is more than 25 cm, the car will drive straight at max speed and a RGB Led will turn green
   if (senseDistance('s') > fastDis) {
     setRGB(0, 255, 0);
@@ -167,42 +167,47 @@ double senseDistance(char dir) {
 void drive(char d, int LPWM , int RPWM, double del) {
   //depending on the direction of the char variable the motors will turn to face that direction
   double compensation = 55;
-  if (d == 's') {
-    LPWM = LPWM - compensation;
-    analogWrite(rightMotor1, RPWM);
-    analogWrite(rightMotor2, 0);
-    analogWrite(leftMotor1, LPWM);
-    analogWrite(leftMotor2, 0);
-  }
-  else if (d == 'b') {
-    LPWM = LPWM - compensation;
-    analogWrite(rightMotor1, 0);
-    analogWrite(rightMotor2, RPWM);
-    analogWrite(leftMotor1, 0);
-    analogWrite(leftMotor2, LPWM);
-  }
-  else if (d == 'r') {
-    analogWrite(rightMotor1, 0);
-    analogWrite(rightMotor2, RPWM);
-    analogWrite(leftMotor1, 0);
-    analogWrite(leftMotor2, 0);
-    delay(del);
-  }
-  else if (d == 'l') {
-    analogWrite(rightMotor1, 0);
-    analogWrite(rightMotor2, 0);
-    analogWrite(leftMotor1, 0);
-    analogWrite(leftMotor2, LPWM);
-    delay(del);
-  }
-  else {
-    analogWrite(rightMotor1, 0);
-    analogWrite(rightMotor2, 0);
-    analogWrite(leftMotor1, 0);
-    analogWrite(leftMotor2, 0);
-    delay(del);
-  }
+  switch (d) {
+    case 's':
+      LPWM = LPWM - compensation;
+      analogWrite(rightMotor1, RPWM);
+      analogWrite(rightMotor2, 0);
+      analogWrite(leftMotor1, LPWM);
+      analogWrite(leftMotor2, 0);
+      break;
 
+    case 'b':
+      LPWM = LPWM - compensation;
+      analogWrite(rightMotor1, 0);
+      analogWrite(rightMotor2, RPWM);
+      analogWrite(leftMotor1, 0);
+      analogWrite(leftMotor2, LPWM);
+      break;
+
+    case 'r':
+      analogWrite(rightMotor1, 0);
+      analogWrite(rightMotor2, RPWM);
+      analogWrite(leftMotor1, 0);
+      analogWrite(leftMotor2, 0);
+      delay(del);
+      break;
+
+    case 'l':
+      analogWrite(rightMotor1, 0);
+      analogWrite(rightMotor2, 0);
+      analogWrite(leftMotor1, 0);
+      analogWrite(leftMotor2, LPWM);
+      delay(del);
+      break;
+
+    default:
+      analogWrite(rightMotor1, 0);
+      analogWrite(rightMotor2, 0);
+      analogWrite(leftMotor1, 0);
+      analogWrite(leftMotor2, 0);
+      delay(del);
+      break;
+  }
 }
 
 // a method to quickly set the colours of an rgb led
