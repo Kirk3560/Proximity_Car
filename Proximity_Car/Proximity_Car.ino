@@ -129,17 +129,21 @@ double senseDistance(char dir) {
   //argument decides which distance sensor to return the value for
   int echoPin;
   int trigPin;
-  if (dir == 'l') {
-    echoPin = echoPinL;
-    trigPin = trigPinL;
-  }
-  else if (dir == 'r') {
-    echoPin = echoPinR;
-    trigPin = trigPinR;
-  }
-  else {
-    echoPin = echoPinS;
-    trigPin = trigPinS;
+  switch (dir) {
+    case 'l':
+      echoPin = echoPinL;
+      trigPin = trigPinL;
+      break;
+
+    case 'r':
+      echoPin = echoPinR;
+      trigPin = trigPinR;
+      break;
+
+    default:
+      echoPin = echoPinS;
+      trigPin = trigPinS;
+      break;
   }
 
   //Turns on the trigger pin for 10 microseconds
